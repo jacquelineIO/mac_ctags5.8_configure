@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# run configure
+# make
+# make install
+# make test
+################################################################################
+./configure \
+  CPP="/Developer/usr/bin/cpp" \
+  LIBS="-L/Developer/SDKs/MacOSX10.6.sdk/usr/lib" \
+  CPPFLAGS="-I/Developer/SDKs/MacOSX10.6.sdk/usr/include"
+  ## /Developer/SDKs/MacOSX10.6.sdk/usr/include/c++/4.2.1/ "
+  ##CPPFLAGS="-I/Developer/SDKs/MacOSX10.6.sdk/usr/include/c++/4.2.1/tr1/"
+  ## /Developer/SDKs/MacOSX10.6.sdk/usr/include
