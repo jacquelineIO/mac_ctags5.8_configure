@@ -28,7 +28,7 @@ SLINK	= ln -s
 STRIP	= strip
 CC	= gcc
 DEFS	= -DHAVE_CONFIG_H
-CFLAGS	= -g -O2
+CFLAGS	= -g -O2 
 LDFLAGS	= 
 LIBS	= -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib
 EXEEXT	= 
@@ -48,6 +48,7 @@ OBJEXT	= o
 #DEFS	= -DHAVE_CONFIG_H
 #CFLAGS	= -O
 #LDFLAGS=
+INCDIR = -I/Developer/SDKs/MacOSX10.6.sdk/usr/include
 
 include $(srcdir)/source.mak
 
@@ -98,20 +99,20 @@ DEST_EMAN	= $(man1dir)/$(EMAN)
 all: $(CTAGS_EXEC) $(READ_LIB)
 
 $(CTAGS_EXEC): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBS)
+	$(CC) $(LDFLAGS) $(INCDIR) -o $@ $(OBJECTS) $(LIBS)
 
 dctags$(EXEEXT): debug.c $(SOURCES) $(HEADERS)
-	$(CC) -I. -I$(srcdir) $(DEFS) -DDEBUG -g $(LDFLAGS) -o $@ debug.c $(SOURCES)
+	$(CC) -I. -I$(srcdir) $(INCDIR) $(DEFS) -DDEBUG -g $(LDFLAGS) -o $@ debug.c $(SOURCES)
 
 readtags$(EXEEXT): readtags.c readtags.h
-	$(CC) -DREADTAGS_MAIN -I. -I$(srcdir) $(DEFS) $(CFLAGS) $(LDFLAGS) -o $@ readtags.c
+	$(CC) -DREADTAGS_MAIN -I. -I$(srcdir) $(INCDIR) $(DEFS) $(CFLAGS) $(LDFLAGS) -o $@ readtags.c
 
 ETYPEREF_OBJS = etyperef.o keyword.o routines.o strlist.o vstring.o
 etyperef$(EXEEXT): $(ETYPEREF_OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(ETYPEREF_OBJS)
+	$(CC) $(LDFLAGS) $(INCDIR) -o $@ $(ETYPEREF_OBJS)
 
 etyperef.o: eiffel.c
-	$(CC) -DTYPE_REFERENCE_TOOL -I. -I$(srcdir) $(DEFS) $(CFLAGS) -o $@ -c eiffel.c
+	$(CC) -DTYPE_REFERENCE_TOOL -I. -I$(srcdir) $(INCDIR) $(DEFS) $(CFLAGS) -o $@ -c eiffel.c
 
 $(OBJECTS): $(HEADERS) config.h
 
@@ -217,6 +218,6 @@ maintainerclean: distclean
 # implicit rules
 #
 .c.$(OBJEXT):
-	$(CC) -I. -I$(srcdir) $(DEFS) $(CFLAGS) -c $<
+	$(CC) -I. -I$(srcdir) $(INCDIR) $(DEFS) $(CFLAGS) -c $<
 
 # vi:set tabstop=8:
